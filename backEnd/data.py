@@ -12,15 +12,22 @@ def get_forecast_summary(url):
    
     r = requests.get(url, timeout=10)
     r.raise_for_status()
-    data = r.json()
+    data = r.json() #i believe this converts the json into a dictionary, not string
 
     temps = data["hourly"]["temperature_2m"]
     precip = data["hourly"]["precipitation"]
-    types = data["hourly"]["precipitation_type"]
+    types = data["hourly"]["precipitation_type"] #null in data set for some reason
+    
 
     # Compute simple stats
-    avg_temp = sum(temps) / len(temps)
-    snow_hours = sum(1 for t, p in zip(types, precip) if t == 2 and p > 0)
+    avg_temp = sum(temps) / len(temps) 
+    precipAndType = zip(types, precip)
+    snow_hours = 0
+    # zip pairs each precip type with corresponding precip amount
+    for type, precip in precipAndType:
+        if type == 2 and precip > 0:
+            snowHours+=1
+    # note: precip type is null always in data so not working rn 
     total_hours = len(temps)
     snow_chance = (snow_hours / total_hours) * 100
 
@@ -28,5 +35,5 @@ def get_forecast_summary(url):
     summary = f"❄️ Snow chance: {snow_chance:.1f}% | 🌡️ Avg Temp: {avg_temp:.1f}°C"
     return summary
 
-
+#TODO: precip type in array is null so I iwll need to calculate it manually
 print(get_forecast_summary(Yellowknife_Data))
