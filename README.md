@@ -1,6 +1,14 @@
 # SnowApp
-Repository For Snow App
+Published 2025
+Authors: Aaron Morales, Dawood Rauf, David Ahn, Joshua Kwon. 
+PM:
+Back End:
+Front End:
 
+Repository for website which allows for a user to input their location and will give them their chance of getting snow and recieving a school cancellation/delay. 
+
+
+Notes on using Git:
 1: Make sure you have GIT enabled on your computer:
     - RUN following command on terminal to install: "sudo apt install git" 
 2: Make sure you have Python downloaded on computer (most of program will be done on Python 3.11)
