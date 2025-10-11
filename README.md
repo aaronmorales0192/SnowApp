@@ -20,6 +20,7 @@ Useful GIT Commands:
 
 
     Updating local code to reflect shared repository (MAKE SURE TO DO THIS EVERYTIME WHEN STARTING CODE AS OTHERS MAY HAVE DONE EDITS TO THE REPOSITORY):
+   
     git fetch
     git pull
 
