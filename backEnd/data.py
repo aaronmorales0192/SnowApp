@@ -11,7 +11,7 @@ import requests
 def get_forecast_summary(url):
     """Fetch forecast data and return a readable string summary."""
    
-    r = requests.get(url, timeout=10)
+    r = requests.get(url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
     r.raise_for_status()
     data = r.json() #i believe this converts the json into a dictionary, not string
 
