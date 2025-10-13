@@ -12,5 +12,30 @@ NewYork_lon = -74.0060
 Yellowknife_lat = 62.45397
 Yellowknife_lon = -114.37179
 
+
+import requests
+#gets data based on city and state
+def get_coordinates(city, state):
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        "q": f"{city}, {state}, USA",
+        "format": "json",
+        "limit": 1
+    }
+
+    r = requests.get(url, params=params, headers={"User-Agent": "geoApp"})
+    r.raise_for_status()
+    data = r.json()
+
+    if data:
+        lat = data[0]["lat"]
+        lon = data[0]["lon"]
+        return float(lat), float(lon)
+    else:
+        return None, None
+
+lat, lon = get_coordinates("Washington", "DC")
+print(lat, lon)
+
 #TODO: precip type in array is null so I iwll need to calculate it manually
 #print(get_forecast_summary(Yellowknife_Data))
