@@ -32,9 +32,12 @@ def get_forecast_summary(lat, lon):
 #utilizes api from gfs seamless ensembles
 #IN PROGRESS
 def get_snowfall_amount_ensemble(lat, lon):
-    url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=65.28333&longitude=" + str(lat) + "&longitude=" + str(lon) + "&hourly=snowfall&models=gfs_seamless&forecast_days=7&timezone=America/New_York"
+    GFS_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "longitude="  + str(lon) + "&hourly=snowfall&models=gfs_seamless&forecast_days=7&timezone=America/New_York"
+    
     r = requests.get(url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
     r.raise_for_status()
-    data = r.json() 
+    GFS_MODEL_data = r.json() 
     #i believe this converts the json into a dictionary, not string
+    GEM_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gem_global&forecast_days=7&timezone=America%2FYellowknife"
+    ICON_MODEL_data = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=icon_seamless&forecast_days=7&timezone=America%2FYellowknife"
    #precipAndMake =
