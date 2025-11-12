@@ -1,9 +1,7 @@
 # SnowApp
 Published 2025
 Authors: Aaron Morales, Dawood Rauf, David Ahn, Joshua Kwon. 
-PM:
-Back End:
-Front End:
+
 
 Repository for website which allows for a user to input their location and will give them their chance of getting snow and recieving a school cancellation/delay. 
 
