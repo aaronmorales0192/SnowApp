@@ -16,7 +16,12 @@
   /* border: 8px solid rgb(100, 45, 168); */
 }
 
-
+.middleLayout{
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
 
 .homePageLink {
   text-decoration: none;
