@@ -30,4 +30,4 @@ Useful GIT Commands:
     git fetch
     git pull
 
-
+To install requests (needed to run files): python -m pip install requests
