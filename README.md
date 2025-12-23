@@ -31,3 +31,4 @@ Useful GIT Commands:
     git pull
 
 To install requests (needed to run files): python -m pip install requests
+to install flask: python -m pip install flask (make sure flask is installed in venv folder)
