@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Find My Snow Forecast!</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class = "pageLayout">
+
+<body class="pageLayout">
     <video autoplay loop muted playsinline class="backgroundSnow">
-        <source src = "snowfall.mp4" type = "video/mp4">
+        <source src="snowfall.mp4" type="video/mp4">
     </video>
-    <div class = "topLayout"> 
+    <div class="topLayout">
         <h1 id="title">Snow Predictor!</h1>
-         <a class = "aboutLink" href="about.html">About</a>
+        <a class="aboutLink" href="about.html">About</a>
     </div>
-    <div class = "centerInput">
-        <h1 id="header">I Will give you the snow forecast!</h1>
+   
+    <div class="leftInput">
+        <h1 id="header">See How Much Snow Is Coming!</h1>
+    </div>
+
+     <div class="centerInput">
         <label for="num1">City:</label>
-        <input type="text" id="num1" placeholder="Enter City">
-        <label for="num1">State:</label>
-        <input type="text" id="num2" placeholder="Enter State">
-        <button class = "snowButton" id="snowButton">Get Snow Forecast</button>
-        <p id = "answer"></p>
+        <input type="text" id="num1" placeholder="">
+        <label for="num2">State:</label>
+        <input type="text" id="num2" placeholder="">
+        <button class="snowButton" id="snowButton">Get Snow Forecast</button>
+        <p id="answer"></p>
     </div>
-    <p id = "answer"></p>
+
+
+    <p id="answer"></p>
     <script src="websiteView.js"></script>
 </body>
+
 </html>
