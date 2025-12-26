@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>About</title>
-    <link rel="stylesheet" href="aboutStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aboutStyle.css') }}">
 </head>
 <body class="pageLayout">
     <div class = "topLayout"> 
         <h1 id="title">Snow Predictor!</h1>
-        <a class = "homePageLink" href="homePage.html">Home Page</a>
+        <a class="homePageLink" href="{{ url_for('home') }}">Home Page</a>
     </div>
     <div class = "middleLayout">
         <div class = "aboutText">

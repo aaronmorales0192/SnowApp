@@ -3,16 +3,16 @@
 
 <head>
     <title>Find My Snow Forecast!</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body class="pageLayout">
     <video autoplay loop muted playsinline class="backgroundSnow">
-        <source src="snowfall.mp4" type="video/mp4">
+        <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
     </video>
     <div class="topLayout">
         <h1 id="title">Snow Predictor!</h1>
-        <a class="aboutLink" href="about.html">About</a>
+        <a class="aboutLink" href="about">About</a>
     </div>
    
     <div class="leftInput">
@@ -30,7 +30,8 @@
 
 
     <p id="answer"></p>
-    <script src="websiteView.js"></script>
+    <script src="{{ url_for('static', filename='websiteview.js') }}"></script>
+
 </body>
 
 </html>
