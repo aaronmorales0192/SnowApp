@@ -1,6 +1,11 @@
 #run "pip install requests" in terminal to allow for requests be used. 
 import requests
+from datetime import datetime
 
+#parts for improvement: Eventually the API we are using does not update every hour, updates at a sepcific interval. 
+#this means that the current logic implemented will only get the precipatation amount of the first time given even though 
+#the current time has passed. Also, the temp_2m is also wrong in logic. 
+#need to implement a method that automatically updates the value we are getting based on current time.
 def get_forecast_summary(lat, lon):
     #"""Fetch forecast data and return a readable string summary."""
     url = "https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) + "&hourly=temperature_2m,precipitation,precipitation_type&forecast_days=2&timezone=America%2FNew_York"
@@ -10,10 +15,13 @@ def get_forecast_summary(lat, lon):
     temps = data["hourly"]["temperature_2m"]
     precip = data["hourly"]["precipitation"]
     types = data["hourly"]["precipitation_type"] #null in data set for some reason
-    
+    current_time = datetime.now() #gives us the current local time of the user.
 
     # Compute simple stats
     avg_temp = sum(temps) / len(temps) 
+    #need to modify this logic. eventually the temp_2m doesnt mean temperature in 2 min interval, 
+    #it means that the temperature is recorded at 2m above the ground.
+
     precipAndType = zip(types, precip)
     snow_hours = 0
     # zip pairs each precip type with corresponding precip amount
