@@ -28,6 +28,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
+  
   /* border: 8px solid rgb(100, 45, 168); */
 
 }
@@ -37,17 +38,75 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 30px;
+  font-size: larger;
 
 }
 
-.leftInput {
+
+.inputContainer {
 
   display: flex;
-  align-items: flex-start;      
-  justify-content: flex-start;   
-  flex-direction: column;
-  padding-left: 40px;           
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 250px; 
 
+}
+.leftInput {
+
+  display: flex; 
+  flex-direction: column;
+  padding-left: 200px;           
+
+}
+
+.leftInput label {
+    text-align: center;
+    margin-bottom: 10px; 
+}
+
+
+.rightInput {
+
+  display: flex;  
+  flex-direction: column;
+  padding-right: 200px;           
+
+}
+
+.rightInput label {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px; 
+
+}
+
+.inputWithBackground {
+    background-color: rgb(101, 167, 225);
+    padding: 20px 30px;
+    border-radius: 8px;
+    margin: 0 20px;
+    min-width: 250px;
+   
+}
+
+.snowButton {
+  margin-top: 90px;
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(101, 167, 225);
+  border-radius: 10px;
+  padding: 20px 20px;
+  
+}
+
+.inputWithBackground:first-child {
+    margin-left: 200px;
+}
+
+.inputWithBackground:last-child {
+    margin-right: 200px;
 }
 
 
@@ -64,9 +123,6 @@
   background-color: rgb(111, 226, 232);
 }
 
-.snowButton {
-  font-size: 12px;
-}
 
 
 #title {
