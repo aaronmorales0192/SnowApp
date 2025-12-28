@@ -2,33 +2,43 @@
 import requests
 from datetime import datetime
 
-def get_forecast_summary(lat, lon):
-    #so the logic has been fixed so it works based on the user's local time. However, I was not able to test, since flask server 
-    #doesn't work for now. Also, if you want entire day worth of data, tell me.
+#alright, the next 24 hour logic has been completed. However, due to excessive calling on the API and the
+#massive computatiion with 2-3D arrays, the time is very slow per one iteration. 
+#Each iteration, it will generate the date, snow chance, amount, and temperature for the next 24 hours
+#which will take about 30 seconds to a minute based on your computer performace
+#next step is to find a way to decrease the time and optimize the code
+#we are back to kauffman people
 
+def get_forecast_summary(lat, lon):
     #"""Fetch forecast data and return a readable string summary."""
     url = "https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) + "&hourly=temperature_2m,precipitation,precipitation_type&forecast_days=2&timezone=America%2FNew_York"
     r = requests.get(url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
     r.raise_for_status()
     data = r.json() #i believe this converts the json into a dictionary, not string
     temps = data["hourly"]["temperature_2m"]
+    times = data["hourly"]["time"] #Need to get the times array to call time later.
     current_time = datetime.now() #gives us the current local time of the user.
-
     current_hour = current_time.hour 
-    # Compute simple stats
 
-    #this part takes care of the edge case: in case the API decreases time to 24 hours, this will prevent from getting index error.
-    next_hour = min(current_hour + 1, len(temps) - 1)
-    next_hour_temp = temps[next_hour] 
-    #This logic will get the current local time and get the temperature of next hour from current.
+    summary_24hrs = []
+    for i in range(1, 25):
+         #this part takes care of the edge case: in case the API decreases time to 24 hours, this will prevent from getting index error.
+        next_range_hour = min(current_hour + i, len(temps) - 1)
+        next_hour_temp = temps[next_range_hour]
 
-    snow_hours = 0
-    #since the return type of function is a tuple, need to initialize two variables at once.
-    snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(lat, lon, next_hour)
+        #this fromisoformat function changes the string into a datetime object. 
+        #Needed to change the string to datetime object so we could change the format of date string. 
+        forecast_time = datetime.fromisoformat(times[next_range_hour])
 
-    # Return as a formatted string
-    summary = f"❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°C"
-    return summary
+        #since the return type of function is a tuple, need to initialize two variables at once.
+        snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(lat, lon, next_range_hour)
+
+        #This .strftime() function allows us to change the format of the datetime object and write it to a string. 
+        summary = f"⏱️ Date: {forecast_time.strftime('%Y-%m-%d %H:%M')} | ❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°C"
+        summary_24hrs.append(summary)
+    
+    # Return as a joined formatted string
+    return "\n".join(summary_24hrs);
 
 #more accurate for snowfall prediction as it accounts for snowfall amounts by ensemble member
 #utilizes api from gfs seamless ensembles
