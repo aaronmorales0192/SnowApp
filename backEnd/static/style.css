@@ -1,11 +1,13 @@
 /* Make the video fill the entire screen */
 
+
 .pageLayout {
   background-color: rgb(11, 93, 164);
   margin: 0;
   padding: 0;
   display: block;
 }
+
 
 .backgroundSnow {
   position: fixed;
@@ -21,6 +23,7 @@
   /* ignore clicks */
 }
 
+
 .topLayout {
   height: 70px;
   background-color: rgb(101, 167, 225);
@@ -28,10 +31,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-  
   /* border: 8px solid rgb(100, 45, 168); */
 
+
 }
+
 
 .centerInput {
   display: flex;
@@ -41,55 +45,72 @@
   margin-top: 30px;
   font-size: larger;
 
+
 }
 
 
+
+
 .inputContainer {
+
 
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  margin-top: 250px; 
+  margin-top: 250px;
+
 
 }
+
 .leftInput {
 
-  display: flex; 
+
+  display: flex;
   flex-direction: column;
-  padding-left: 200px;           
+  padding-left: 200px;
+
 
 }
+
 
 .leftInput label {
-    text-align: center;
-    margin-bottom: 10px; 
+  text-align: center;
+  margin-bottom: 10px;
 }
+
+
 
 
 .rightInput {
 
-  display: flex;  
+
+  display: flex;
   flex-direction: column;
-  padding-right: 200px;           
+  padding-right: 200px;
+
 
 }
+
 
 .rightInput label {
   text-align: center;
   width: 100%;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
+
 
 }
+
 
 .inputWithBackground {
-    background-color: rgb(101, 167, 225);
-    padding: 20px 30px;
-    border-radius: 8px;
-    margin: 0 20px;
-    min-width: 250px;
-   
+  background-color: rgb(101, 167, 225);
+  padding: 20px 30px;
+  border-radius: 8px;
+  margin: 0 20px;
+  min-width: 250px;
+
 }
+
 
 .snowButton {
   margin-top: 90px;
@@ -97,17 +118,28 @@
   font-family: "Times New Roman", Times, serif;
   background-color: rgb(101, 167, 225);
   border-radius: 10px;
-  padding: 20px 20px;
-  
+  /* padding: 20px 20px; */
+
+
+  display: inline-block;
+  /* Important for links */
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  padding: 15px 40px;
 }
+
 
 .inputWithBackground:first-child {
-    margin-left: 200px;
+  margin-left: 200px;
 }
 
+
 .inputWithBackground:last-child {
-    margin-right: 200px;
+  margin-right: 200px;
 }
+
+
 
 
 .aboutLink {
@@ -119,9 +151,13 @@
   /* outline */
 }
 
+
 .aboutLink:hover {
   background-color: rgb(111, 226, 232);
 }
+
+
+
 
 
 
@@ -133,11 +169,13 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 label {
   font-size: 32px;
   color: black;
   margin-top: 15px;
 }
+
 
 input {
   font-size: 20px;

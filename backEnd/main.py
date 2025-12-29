@@ -19,6 +19,15 @@ def home():
     # This must be in templates/
     return render_template("homepage.html")
 
+@app.route("/results")
+def results():
+   # Render the HTML file called "results.html"
+   return render_template("resultsPage.html")
+
+
+
+
+
 # -----------------------------
 # Route for the About page
 # When someone visits http://127.0.0.1:5000/about

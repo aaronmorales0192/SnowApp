@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Snow Results</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pageLayout">
+   <video autoplay loop muted playsinline class="backgroundSnow">
+       <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
+   </video>
+  
+   <div class="topLayout">
+       <h1 id="title">Snow Results!</h1>
+       <a class="aboutLink" href="/">Back Home</a>
+   </div>
+  
+   <div class="centerInput">
+       <h1>Your Snow Forecast Results</h1>
+       <p>Results will appear here...</p>
+   </div>
+</body>
+</html>
+
