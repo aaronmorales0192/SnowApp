@@ -14,6 +14,12 @@ def get_forecast_summary(lat, lon):
     url = "https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) + "&hourly=temperature_2m,precipitation,precipitation_type&forecast_days=2&timezone=America%2FNew_York"
     r = requests.get(url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
     r.raise_for_status()
+
+    GFS_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gfs_seamless&forecast_days=7&timezone=America/New_York"
+    GFS_r = requests.get(GFS_url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
+    GFS_r.raise_for_status()
+    GFS_MODEL_data = GFS_r.json() 
+
     data = r.json() #i believe this converts the json into a dictionary, not string
     temps = data["hourly"]["temperature_2m"]
     times = data["hourly"]["time"] #Need to get the times array to call time later.
@@ -31,7 +37,7 @@ def get_forecast_summary(lat, lon):
         forecast_time = datetime.fromisoformat(times[next_range_hour])
 
         #since the return type of function is a tuple, need to initialize two variables at once.
-        snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(lat, lon, next_range_hour)
+        snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(next_range_hour, GFS_MODEL_data)
 
         #This .strftime() function allows us to change the format of the datetime object and write it to a string. 
         summary = f"⏱️ Date: {forecast_time.strftime('%Y-%m-%d %H:%M')} | ❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°C"
@@ -42,14 +48,7 @@ def get_forecast_summary(lat, lon):
 
 #more accurate for snowfall prediction as it accounts for snowfall amounts by ensemble member
 #utilizes api from gfs seamless ensembles
-def get_snowfall_chance_amount_ensemble(lat, lon, next_hour):
-    GFS_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gfs_seamless&forecast_days=7&timezone=America/New_York"
-    
-    r = requests.get(GFS_url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
-    r.raise_for_status()
-    GFS_MODEL_data = r.json() 
-    #i believe this converts the json into a dictionary, not string
-
+def get_snowfall_chance_amount_ensemble(next_hour, data):
     nextHourSnowCount = 0
     nextHourSnowAmount = 0
 
@@ -57,9 +56,9 @@ def get_snowfall_chance_amount_ensemble(lat, lon, next_hour):
     for i in range(1, 31):
         currentMember = f"snowfall_member{i:02d}"
         #for now, the loop only predicts for the next hour. If we want more hours like 24, then I can modify the logic to do so.
-        if (GFS_MODEL_data["hourly"][currentMember][next_hour] != 0):
+        if (data["hourly"][currentMember][next_hour] != 0):
             nextHourSnowCount+=1
-            nextHourSnowAmount+=GFS_MODEL_data["hourly"][currentMember][next_hour]
+            nextHourSnowAmount+=data["hourly"][currentMember][next_hour]
     
     #get the average percent of snowing chance
     snowPercent = (nextHourSnowCount/30)*100
