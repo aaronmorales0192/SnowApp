@@ -42,7 +42,7 @@ def about():
 # Route to handle Snow Forecast requests
 # This will be called by your JavaScript using POST
 # -----------------------------
-@app.route("/get_snow", methods=["POST"])
+@app.route("/get_forecast", methods=["GET"])
 def get_snow():
     # Get city and state from JSON sent by JS
     city = request.json.get("city")
