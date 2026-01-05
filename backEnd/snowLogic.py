@@ -37,7 +37,7 @@ def get_forecast_summary(lat, lon):
         forecast_time = datetime.fromisoformat(times[next_range_hour])
 
         #since the return type of function is a tuple, need to initialize two variables at once.
-        snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(next_range_hour, GFS_MODEL_data)
+        snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(next_range_hour, GFS_MODEL_data["hourly"])
 
         #This .strftime() function allows us to change the format of the datetime object and write it to a string. 
         summary = f"⏱️ Date: {forecast_time.strftime('%Y-%m-%d %H:%M')} | ❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°C"
@@ -55,10 +55,11 @@ def get_snowfall_chance_amount_ensemble(next_hour, data):
     #since there are 30 members given in the currently used data, just loop 30 times.
     for i in range(1, 31):
         currentMember = f"snowfall_member{i:02d}"
+        current_data = data[currentMember][next_hour]
         #for now, the loop only predicts for the next hour. If we want more hours like 24, then I can modify the logic to do so.
-        if (data["hourly"][currentMember][next_hour] != 0):
+        if (current_data != 0):
             nextHourSnowCount+=1
-            nextHourSnowAmount+=data["hourly"][currentMember][next_hour]
+            nextHourSnowAmount+=current_data
     
     #get the average percent of snowing chance
     snowPercent = (nextHourSnowCount/30)*100
