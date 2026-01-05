@@ -72,3 +72,29 @@ def get_snowfall_chance_amount_ensemble(next_hour, data):
 #     GEM_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gem_global&forecast_days=7&timezone=America%2FYellowknife"
 #     ICON_MODEL_data = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=icon_seamless&forecast_days=7&timezone=America%2FYellowknife"
 #    #precipAndMake =
+def get_nws_alerts(lat, lon):
+    url = f"https://api.weather.gov/alerts/active?point={lat},{lon}"
+    r = requests.get(url)
+    r.raise_for_status()
+    alerts_json = r.json()  # JSON with alert features
+    results = []
+
+    for alert in alerts_json.get("features", []):
+        props = alert.get("properties", {})
+
+        event = props.get("event", "Unknown Alert")
+        ends = props.get("ends") or props.get("expires")
+
+        # Convert to readable datetime
+        if ends:
+            ends_dt = datetime.fromisoformat(ends)
+            ends_str = ends_dt.strftime("%Y-%m-%d %I:%M %p")
+        else:
+            ends_str = "Unknown"
+
+        results.append({
+            "alert": event,
+            "valid_until": ends_str
+        })
+
+    return results
