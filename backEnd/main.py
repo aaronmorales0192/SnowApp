@@ -13,7 +13,7 @@ app = Flask(__name__)
 # When someone visits http://127.0.0.1:5000/
 # Flask will run this function
 # -----------------------------
-@app.route("/")
+@app.route("/homepage")
 def home():
     # Render the HTML file called "homepage.html"
     # This must be in templates/
