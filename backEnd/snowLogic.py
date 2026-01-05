@@ -55,10 +55,11 @@ def get_snowfall_chance_amount_ensemble(next_hour, data):
     #since there are 30 members given in the currently used data, just loop 30 times.
     for i in range(1, 31):
         currentMember = f"snowfall_member{i:02d}"
+        current_data = data["hourly"][currentMember][next_hour]
         #for now, the loop only predicts for the next hour. If we want more hours like 24, then I can modify the logic to do so.
-        if (data["hourly"][currentMember][next_hour] != 0):
+        if (current_data != 0):
             nextHourSnowCount+=1
-            nextHourSnowAmount+=data["hourly"][currentMember][next_hour]
+            nextHourSnowAmount+=current_data
     
     #get the average percent of snowing chance
     snowPercent = (nextHourSnowCount/30)*100
