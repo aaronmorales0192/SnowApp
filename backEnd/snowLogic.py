@@ -77,23 +77,20 @@ def get_nws_alerts(lat, lon):
     r = requests.get(url)
     r.raise_for_status()
     alerts_json = r.json()  # JSON with alert features
-    results = []
+    results = ""
 
     for alert in alerts_json.get("features", []):
         props = alert.get("properties", {})
 
         event = props.get("event", "Unknown Alert")
         ends = props.get("ends") or props.get("expires")
-        if event == "Wintry Weather Advisory" or event == "Winter Storm Warning" or event == "Winter Storm Watch":
+        if event == "Winter Weather Advisory" or event == "Winter Storm Warning" or event == "Winter Storm Watch" or event == "Blizzard Warning" or event == "Ice Storm Warning":
             # Convert to readable datetime
             if ends:
                 ends_dt = datetime.fromisoformat(ends)
                 ends_str = ends_dt.strftime("%Y-%m-%d %I:%M %p")
             else:
                 ends_str = "Unknown"
-            results.append({
-                "alert": event,
-                "valid_until": ends_str
-            })
-
+            results += "Alert: " + event + " Valid Until " + ends_str
+            
     return results
