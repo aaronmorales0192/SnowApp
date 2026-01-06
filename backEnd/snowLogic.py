@@ -84,17 +84,16 @@ def get_nws_alerts(lat, lon):
 
         event = props.get("event", "Unknown Alert")
         ends = props.get("ends") or props.get("expires")
-
-        # Convert to readable datetime
-        if ends:
-            ends_dt = datetime.fromisoformat(ends)
-            ends_str = ends_dt.strftime("%Y-%m-%d %I:%M %p")
-        else:
-            ends_str = "Unknown"
-
-        results.append({
-            "alert": event,
-            "valid_until": ends_str
-        })
+        if event == "Wintry Weather Advisory" or event == "Winter Storm Warning" or event == "Winter Storm Watch":
+            # Convert to readable datetime
+            if ends:
+                ends_dt = datetime.fromisoformat(ends)
+                ends_str = ends_dt.strftime("%Y-%m-%d %I:%M %p")
+            else:
+                ends_str = "Unknown"
+            results.append({
+                "alert": event,
+                "valid_until": ends_str
+            })
 
     return results

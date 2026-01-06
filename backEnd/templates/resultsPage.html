@@ -1,45 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-   <title>Snow Results</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Snow Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body class="pageLayout">
-   <video autoplay loop muted playsinline class="backgroundSnow">
-       <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
-   </video>
-  
-   <div class="topLayout">
-       <h1 id="title">Snow Results!</h1>
-       <a class="aboutLink" href="/">Back Home</a>
-   </div>
-  
-   <div class="centerInput">
-       <h1>Your Snow Forecast Results</h1>
+    <video autoplay loop muted playsinline class="backgroundSnow">
+        <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
+    </video>
+
+    <div class="topLayout">
+        <h1 id="title">Snow Results!</h1>
+        <a class="aboutLink" href="/">Back Home</a>
+    </div>
+
+    <div class="centerInput">
+        <h1>Your Snow Forecast Results</h1>
 
         <div class="advisoryBlock">
 
-        <h1>Advisory</h1>
+            <h1>Advisory</h1>
 
-   </div>
+        </div>
 
-       <p>Results will appear here...</p>
-   </div>
-
-  
-
-   <div class="resultsBlock">
-
-      <h1 id="title">Put the results here</h1>
-
-      <div class="result-box">
-        <p><strong>Location:</strong> <span id="loc">-</span></p>
-        <p><strong>Snowfall:</strong> <span id="snow">-</span> inches</p>
-        <p><strong>Temperature:</strong> <span id="temp">-</span>°F</p>
-        <p><strong>Conditions:</strong> <span id="cond">-</span></p>
     </div>
 
-   </div>
-</body>
-</html>
+    <div class="tab">
 
+        <div class="tabButtons"> 
+
+            <button>Hourly Forecast</button>
+            <button>School Cancellation</button>
+
+        </div>
+
+        <div class="tabContent"> 
+
+            <div>Content for hourly</div>
+            <div>Content for school cancellation</div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- <div class="resultsBlock">
+
+        <h1 id="title">Put the results here</h1>
+
+        <div class="result-box">
+            <p><strong>Location:</strong> <span id="loc">-</span></p>
+            <p><strong>Snowfall:</strong> <span id="snow">-</span> inches</p>
+            <p><strong>Temperature:</strong> <span id="temp">-</span>°F</p>
+            <p><strong>Conditions:</strong> <span id="cond">-</span></p>
+        </div>
+
+    </div> -->
+</body>
+
+</html>
