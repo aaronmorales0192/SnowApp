@@ -23,45 +23,35 @@
             <h3 id="advisoryHeading">Advisory</h3>
 
             <div id="advisoryContent" class="advisory-text">
-                {{ advisory_text_goes_here }} 
+                Loading advisories...
             </div>
         </div>
 
+        <div class="tab">
+
+            <div class="tabButtons">
+
+                <button id="tabButtons">Hourly Forecast</button>
+                <button>School Cancellation</button>
+
+            </div>
+
+            <div class="tabContent">
+
+                <div>Content for hourly</div>
+                <div>Content for school cancellation</div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="tab">
-
-        <div class="tabButtons">
-
-            <button>Hourly Forecast</button>
-            <button>School Cancellation</button>
-
-        </div>
-
-        <div class="tabContent">
-
-            <div>Content for hourly</div>
-            <div>Content for school cancellation</div>
 
 
-        </div>
+    <p id="answer"></p>
+    <script src="{{ url_for('static', filename='websiteview.js') }}"></script>
 
-    </div>
-
-
-
-    <!-- <div class="resultsBlock">
-
-        <h1 id="title">Put the results here</h1>
-
-        <div class="result-box">
-            <p><strong>Location:</strong> <span id="loc">-</span></p>
-            <p><strong>Snowfall:</strong> <span id="snow">-</span> inches</p>
-            <p><strong>Temperature:</strong> <span id="temp">-</span>°F</p>
-            <p><strong>Conditions:</strong> <span id="cond">-</span></p>
-        </div>
-
-    </div> -->
 </body>
 
 </html>
