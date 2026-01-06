@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     display: block;
+    overflow-x: hidden; /* Add this */
 }
 
 .resultsBlock {
@@ -42,18 +43,93 @@
     font-size: larger;
 }
 
-.tabButtons {
-    background-color: rgb(101, 167, 225);
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-}
+
+
 
 .tabButtons button {
-    background-color: rgb(11, 93, 164);
+    margin-top: 50px;
+    background-color: #0c7bc4;
     color: white;
     border: none;
     padding: 10px 16px;
     border-radius: 6px;
+    font-size: larger;
+
 }
+
+.hourlyScroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 15px 25px; /* Add left/right padding here */
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+}
+
+
+
+.hourlyScroll::-webkit-scrollbar {
+    height: 0px;
+    display: block; /* Ensure it shows up */
+}
+
+.hourCard {
+    min-width: 120px;
+    max-width: 120px;
+    background-color: rgb(11, 93, 164);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    flex-shrink: 0; /* Important: prevents shrinking */
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+/* Keep the parent containers constrained */
+/* Add this to your existing CSS */
+.centerInput {
+    width: 100%;
+    max-width: 95vw; /* Constrain to 95% of viewport width */
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.hourlyBox {
+    margin-top: 75px;
+    width: 100vw; /* Use viewport width */
+    margin-left: calc(-50vw + 50%); /* Center it */
+    margin-right: calc(-50vw + 50%);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* utility */
+.hidden {
+    display: none;
+}
+
+
+.tabContent {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible; /* Change from hidden to visible */
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll on body */
+}
+
+.cancellationBox {
+    background: white;
+}
+
 
