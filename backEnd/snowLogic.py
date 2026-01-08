@@ -1,26 +1,21 @@
 #run "pip install requests" in terminal to allow for requests be used. 
 import requests
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
-
-#alright, the next 24 hour logic has been completed. However, due to excessive calling on the API and the
-#massive computatiion with 2-3D arrays, the time is very slow per one iteration. 
-#Each iteration, it will generate the date, snow chance, amount, and temperature for the next 24 hours
-#which will take about 30 seconds to a minute based on your computer performace
-#next step is to find a way to decrease the time and optimize the code
-#we are back to kauffman people
 
 def get_forecast_summary(lat, lon):
     #"""Fetch forecast data and return a readable string summary."""
-    url = "https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) + "&hourly=temperature_2m,precipitation,precipitation_type&forecast_days=2&timezone=America%2FNew_York"
-    r = requests.get(url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
-    r.raise_for_status()
+    
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation&forecast_days=5&timezone=America%2FNew_York"
 
-    GFS_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gfs_seamless&forecast_days=7&timezone=America/New_York"
-    GFS_r = requests.get(GFS_url, timeout=10) #possible url change needed if time passes. Otherwise, it looks good
-    GFS_r.raise_for_status()
-    GFS_MODEL_data = GFS_r.json() 
+    GFS_url = f"https://ensemble-api.open-meteo.com/v1/ensemble?latitude={lat}&longitude={lon}&hourly=snowfall&models=gfs_seamless&forecast_days=5&timezone=America/New_York"
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        forecast_future = executor.submit(fetch, url)
+        gfs_future = executor.submit(fetch, GFS_url)
 
-    data = r.json() #i believe this converts the json into a dictionary, not string
+        data = forecast_future.result()
+        GFS_MODEL_data = gfs_future.result()
+
     temps = data["hourly"]["temperature_2m"]
     times = data["hourly"]["time"] #Need to get the times array to call time later.
     current_time = datetime.now() #gives us the current local time of the user.
@@ -72,6 +67,10 @@ def get_snowfall_chance_amount_ensemble(next_hour, data):
 #     GEM_url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=gem_global&forecast_days=7&timezone=America%2FYellowknife"
 #     ICON_MODEL_data = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=" +  str(lat) + "&longitude="  + str(lon) + "&hourly=snowfall&models=icon_seamless&forecast_days=7&timezone=America%2FYellowknife"
 #    #precipAndMake =
+
+def fetch(url):
+    return requests.get(url, timeout=10).json()
+
 def get_nws_alerts(lat, lon):
     url = f"https://api.weather.gov/alerts/active?point={lat},{lon}"
     r = requests.get(url)
