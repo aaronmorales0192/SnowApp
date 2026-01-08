@@ -1,4 +1,4 @@
-const forecastEl = document.getElementById("forecast");
+const forecastContent = document.getElementById("forecast");
 const advisoryContent = document.getElementById("advisoryContent");
 
 // Read query parameters from URL
@@ -11,9 +11,9 @@ fetch(`/get_forecast?city=${encodeURIComponent(city)}&state=${encodeURIComponent
   .then(data => {
     // ----- Forecast -----
     if (data.forecast) {
-      forecastEl.innerHTML = data.forecast.replaceAll("\n", "<br>");
+      forecastContent.innerHTML = data.forecast.replaceAll("\n", "<br>");
     } else {
-      forecastEl.textContent = "Unable to retrieve forecast.";
+      forecastContent.textContent = "Unable to retrieve forecast.";
     }
 
     // ----- Advisories -----
