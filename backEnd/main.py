@@ -45,8 +45,9 @@ def about():
 @app.route("/get_forecast", methods=["GET"])
 def get_snow():
     # Get city and state from JSON sent by JS
-    city = request.json.get("city")
-    state = request.json.get("state")
+    city = request.args.get("city")
+    state = request.args.get("state")
+
     
     # Use your existing modules to get coordinates
     lat, lon = data.get_coordinates(city, state)
