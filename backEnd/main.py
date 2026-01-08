@@ -52,7 +52,9 @@ def get_snow():
     forecast = snowLogic.get_forecast_summary(lat, lon)
     advisories = snowLogic.get_nws_alerts(lat,lon)
     # Return the forecast as JSON so JS can display it
+     #dictionary with forecast and advisory for the front end
     return jsonify(forecast=forecast, advisory=advisories)
+
 
 
 # -----------------------------
