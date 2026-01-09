@@ -24,7 +24,7 @@ fetch(`/get_forecast?city=${encodeURIComponent(city)}&state=${encodeURIComponent
     }
   })
   .catch(err => {
-    forecastEl.textContent = "Request failed: " + err;
+    forecastContent.textContent = "Request failed: " + err;
     advisoryContent.textContent = "Unable to load advisories.";
     console.error(err);
   });
