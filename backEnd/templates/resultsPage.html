@@ -1,75 +1,62 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Snow Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+   <title>Snow Results</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <meta name="viewport content="width=device-width, initial-scale=1.0">
 </head>
 
 <body class="pageLayout">
-    <video autoplay loop muted playsinline class="backgroundSnow">
-        <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
-    </video>
+   <video autoplay loop muted playsinline class="backgroundSnow">
+       <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
+   </video>
 
-    <div class="topLayout">
-        <h1 id="title">Snow Results!</h1>
-        <a class="aboutLink" href="/">Back Home</a>
-    </div>
+   <div class="topLayout">
+       <h1 id="title">Snow Predictor!</h1>
+       <a class="aboutLink" href="/">Back Home</a>
+   </div>
 
-    <div class="centerInput">
-        <h2>Your Snow Forecast Results</h2>
+   <div class="container">
+       <div class="main-content">
+           <div class="section-header">
+               <h2>Your Snow Forecast Results</h2>
+               <p class="subtitle">Detailed snowfall predictions and advisories for your location</p>
+           </div>
 
+           <!-- ULTRA-COMPACT ADVISORY BLOCK -->
+           <div class="advisoryBlock compact">
+               <div class="advisory-header">
+                   <h3 id="advisoryHeading">Advisory</h3>
+               </div>
+               <div class="advisory-content">
+                   <pre id="advisoryContent" class="advisory-text">
+                       Loading advisories...
+                   </pre>
+               </div>
+           </div>
 
+           <div class="forecast-section">
+               <div class="section-header">
+                   <h2>Snow Forecast</h2>
+                   <p class="scroll-hint"><i class="fas fa-arrows-left-right"></i> Scroll horizontally to view more hours</p>
+               </div>
+               
+               <div class="hourlyBox glass-card">
+                   <div class="hourlyScroll" id="forecast">
+                       <!-- Content will be populated by JavaScript -->
+                   </div>
+               </div>
+           </div>
 
-        <div class="advisoryBlock">
-            <h3 id="advisoryHeading">Advisory</h3>
+           <!-- SPACE FOR FUTURE CONTENT -->
+           <div class="future-content-space">
+               <!-- Add more components here later -->
+           </div>
+       </div>
+   </div>
 
-            <pre id="advisoryContent" class="advisory-text">
-                Loading advisories...
-            </pre>
-        </div>
-
-
-        <div class="tab">
-
-            <div class="tabButtons">
-
-                <button id="hourlyTab">Hourly Forecast</button>
-                <button>School Cancellation</button>
-
-            </div>
-
-             <div id="hourlyContent" class="hourlycontent active">
-                <div class="hourlyBox">
-                    <div class="hourlyScroll">
-                        <h2>Snow Forecast</h2>
-                        <pre id="forecast" class="hourly-data">Loading forecast...</pre>
-                    </div>
-                </div>
-            </div>
-
-           
-
-
-
-
-            <div class="tabContent">
-
-                <div>Content for hourly</div>
-                <div>Content for school cancellation</div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <p id="answer"></p>
-    <script src="{{ url_for('static', filename='resultsView.js') }}"></script>
-
+   <script src="{{ url_for('static', filename='resultsView.js') }}"></script>
 </body>
-
 </html>
