@@ -1,187 +1,405 @@
+/* Base Styles */
+:root {
+    --primary-blue: rgb(11, 93, 164);
+    --secondary-blue: #0c7bc4;
+    --light-blue: rgb(101, 167, 225);
+    --white: #ffffff;
+    --light-gray: rgba(255, 255, 255, 0.9);
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* PAGE LAYOUT - Matching home page */
 .pageLayout {
     background-color: rgb(11, 93, 164);
     margin: 0;
     padding: 0;
     display: block;
-    overflow-x: hidden; /* Add this */
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.resultsBlock {
+/* Video Background - Matching home page */
+.backgroundSnow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+}
 
-    background-color: rgb(11, 93, 164);
-    margin-top: 30px;
-    text-align: center;
+/* HEADER - EXACT MATCH to home page */
+.topLayout {
+    height: 70px;
+    background-color: rgb(101, 167, 225); /* Light blue from home page */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    font-size: larger;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
 }
 
-.result-box {
-    color: white;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-
-}
-
-.advisoryBlock {
-
-    background-color: rgb(11, 93, 164);
-    margin-top: 30px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    font-size: larger;
-}
-
-
-
-
-.tabButtons button {
-    margin-top: 50px;
-    background-color: #0c7bc4;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: larger;
-
-}
-
-.hourlyScroll {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 15px 25px; /* Add left/right padding here */
-    white-space: nowrap;
-    flex-wrap: nowrap;
-    scroll-behavior: smooth;
-}
-
-
-
-.hourlyScroll::-webkit-scrollbar {
-    height: 0px;
-    display: block; /* Ensure it shows up */
-}
-
-.hourCard {
-    min-width: 120px;
-    max-width: 120px;
-    background-color: rgb(11, 93, 164);
-    color: white;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    flex-shrink: 0; /* Important: prevents shrinking */
-    box-sizing: border-box;
-    display: inline-block;
-}
-
-/* Keep the parent containers constrained */
-/* Add this to your existing CSS */
-.centerInput {
-    width: 100%;
-    max-width: 95vw; /* Constrain to 95% of viewport width */
-    margin: 0 auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-
-
-
-
-.tabContent {
-    width: 100%;
-    max-width: 100%;
-    overflow: visible; /* Change from hidden to visible */
-}
-
-
-body {
+#title {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll on body */
+    font-size: 30px;
+    color: rgb(231, 235, 238);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.cancellationBox {
-    background: white;
-    padding-left: 1px;
+.aboutLink {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    padding: 6px 12px;
+    border: 2px solid white;
+    transition: all 0.3s ease;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.hourlycontent, .schoolcontent {
-    display: none;
+.aboutLink:hover {
+    background-color: rgb(111, 226, 232);
+    transform: translateY(-2px);
 }
 
-.hourlycontent.active, .schoolcontent.active {
-    display: block;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Hourly forecast scrolling */
-.hourlyBox {
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
     width: 100%;
-    max-width: 100vw;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    padding-bottom: 30px; /* Added bottom padding since footer is removed */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Section Headers */
+.section-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-header h2 {
+    color: var(--white);
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    margin-top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.scroll-hint {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
     padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ADVISORY BLOCK - ULTRA-COMPACT VERSION (SMALLER) */
+.advisoryBlock.compact {
+    margin-top: 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.advisoryBlock.compact .advisory-header {
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.advisoryBlock.compact .advisory-header h3 {
+    color: var(--white);
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.advisoryBlock.compact .advisory-content {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 10px;
+    max-height: 90px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.advisoryBlock.compact .advisory-text {
+    color: var(--white);
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Forecast Section */
+.forecast-section {
+    margin-top: 15px;
+}
+
+.hourlyBox {
+    padding: 15px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 14px;
 }
 
 .hourlyScroll {
-    width: 100%;
-    overflow-x: auto; /* This enables horizontal scrolling */
-    white-space: nowrap; /* Keeps content on one line */
-    padding-bottom: 10px;
-}
-
-/* Style the pre tag to be scrollable */
-#forecast.hourly-data {
-    display: inline-block;
-    white-space: pre; /* Keep the backend formatting */
-    margin: 0;
-    padding: 15px;
-    min-width: 100%; /* Force it to be wider than container */
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 5px;
-    font-family: monospace;
-    font-size: 14px;
-}
-
-/* If backend returns structured data, you might want this: */
-.hourly-data {
     display: flex;
     gap: 15px;
+    padding: 15px 8px;
     overflow-x: auto;
-    padding: 10px;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
 }
 
-/* Scrollbar styling */
+/* Hour Cards */
+.hourCard {
+    min-width: 130px;
+    background-color: rgba(11, 93, 164, 0.8);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.hourCard:hover {
+    transform: translateY(-5px);
+    background-color: rgba(11, 93, 164, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hourTime {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #bbdefb;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hourSnow {
+    font-size: 12px;
+    line-height: 1.2;
+    margin: 8px 0;
+    color: #e3f2fd;
+    flex-grow: 1;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hourTemp {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 6px;
+    color: #fff;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* SPACE FOR FUTURE CONTENT */
+.future-content-space {
+    min-height: 100px;
+    margin-top: 25px;
+    padding: 15px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.future-content-space::before {
+    content: "Space for future content";
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* Scrollbar Styling */
 .hourlyScroll::-webkit-scrollbar {
-    height: 8px;
+    height: 5px; 
+    border-radius: 3px;
+}
+
+.hourlyScroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
 }
 
 .hourlyScroll::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.3);
-    border-radius: 4px;
+    background-color: rgba(255,255,255,0.35);
+    border-radius: 8px;
 }
 
+.hourlyScroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255,255,255,0.55);
+}
 
+/* Advisory scrollbar */
+.advisory-content::-webkit-scrollbar {
+    width: 4px;
+}
 
+.advisory-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+}
+
+.advisory-content::-webkit-scrollbar-thumb {
+    background: rgba(79, 195, 247, 0.4);
+    border-radius: 2px;
+}
+
+.advisory-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 195, 247, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .topLayout {
+        padding: 0 20px;
+        height: 60px;
+    }
+    
+    #title {
+        font-size: 24px;
+    }
+    
+    .aboutLink {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hourCard {
+        min-width: 120px;
+        padding: 10px;
+    }
+    
+    .glass-card {
+        padding: 15px;
+    }
+    
+    .advisoryBlock.compact {
+        padding: 10px 14px;
+    }
+    
+    .advisoryBlock.compact .advisory-header h3 {
+        font-size: 1rem;
+    }
+    
+    .advisoryBlock.compact .advisory-content {
+        max-height: 80px;
+        padding: 8px;
+    }
+    
+    .advisoryBlock.compact .advisory-text {
+        font-size: 0.75rem;
+        line-height: 1.1;
+    }
+    
+    .future-content-space {
+        min-height: 80px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 12px;
+        padding-bottom: 20px;
+    }
+    
+    #title {
+        font-size: 20px;
+    }
+    
+    .hourCard {
+        min-width: 110px;
+        padding: 8px;
+    }
+    
+    .hourTime {
+        font-size: 14px;
+    }
+    
+    .hourTemp {
+        font-size: 13px;
+    }
+    
+    .advisoryBlock.compact {
+        padding: 8px 12px;
+    }
+    
+    .advisoryBlock.compact .advisory-header {
+        margin-bottom: 4px;
+    }
+    
+    .advisoryBlock.compact .advisory-header h3 {
+        font-size: 0.95rem;
+    }
+    
+    .advisoryBlock.compact .advisory-text {
+        font-size: 0.7rem;
+    }
+}
