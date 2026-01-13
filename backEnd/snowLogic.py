@@ -1,7 +1,7 @@
 #run "pip install requests" in terminal to allow for requests be used. 
 import requests
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def get_forecast_summary(lat, lon):
     #"""Fetch forecast data and return a readable string summary."""
@@ -94,13 +94,155 @@ def get_nws_alerts(lat, lon):
             results += "Alert: " + event + " Valid Until " + ends_str
             
     return results
-def schoolPredictionForDay(lat, lon, day):
-    nws_alerts_str = get_nws_alerts(lat, lon)
-    #more severe weather alerts = almost guarenteed school cancellation
-    severe_warning_keywords = ["Blizzard Warning", "Winter Storm Warning", "Ice Storm Warning"]
-    #less severe weather alerts
-    advisory_keywords = ["Winter Weather Advisory", "Advisory"]
-
-    severe_alert = any(k in nws_alerts_str for k in severe_warning_keywords)
-    advisory_alert = any(k in nws_alerts_str for k in advisory_keywords)
+def schoolPredictionForDay(lat, lon, days=5, user_agent="school-predict/1.0"):
     order = ["very unlikely", "unlikely", "likely", "almost guaranteed"]
+    def bumpCat(cat):
+        if cat not in order:
+            return cat
+        if cat != "almost guaranteed":
+            index = order.index(cat)
+            return order[index + 1]
+        return cat
+    def decCat(cat):
+        if cat not in order:
+            return cat
+        if cat != "very unlikely":
+            index = order.index(cat)
+            return order[index - 1]
+        return cat
+
+    # keywords 
+    severe_warning_keywords = ["Blizzard Warning", "Winter Storm Warning", "Ice Storm Warning", "Blizzard", "Winter Storm"]
+    advisory_keywords = ["Winter Weather Advisory", "Advisory", "Winter Storm Watch", "Winter Weather"]
+
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation&forecast_days={days}&timezone=America%2FNew_York"
+    GFS_url = f"https://ensemble-api.open-meteo.com/v1/ensemble?latitude={lat}&longitude={lon}&hourly=snowfall&models=gfs_seamless&forecast_days={days}&timezone=America%2FNew_York"
+
+    # fetch both in parallel using fetch()
+    try:
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            f1 = executor.submit(fetch, url)
+            f2 = executor.submit(fetch, GFS_url)
+            data = f1.result()
+            GFS_MODEL_data = f2.result()
+    except Exception:
+        # if fetch fails, return all very unlikely for both cancel and delay
+        return {
+            "cancel": {f"day{i}": "very unlikely" for i in range(1, days+1)},
+            "delay":  {f"day{i}": "very unlikely" for i in range(1, days+1)}
+        }
+
+    # get NWS alerts string
+    nws_alerts_str = get_nws_alerts(lat, lon)
+
+    severe_alert_present = any(k.lower() in nws_alerts_str.lower() for k in severe_warning_keywords)
+    advisory_alert_present = any(k.lower() in nws_alerts_str.lower() for k in advisory_keywords)
+
+    # extract hourly arrays
+    hourly = data.get("hourly", {})
+    times = hourly.get("time", [])
+    temps = hourly.get("temperature_2m", [])
+
+    gfs_hourly = GFS_MODEL_data.get("hourly", {}) if isinstance(GFS_MODEL_data, dict) else {}
+
+    # parse times into datetimes and find start index closest to now
+    now = datetime.now()
+    time_datetimes = []
+    for t in times:
+        try:
+            dt = datetime.fromisoformat(t)
+        except Exception:
+            try:
+                dt = datetime.fromisoformat(t.replace("Z", "+00:00"))
+            except Exception:
+                continue
+        time_datetimes.append(dt)
+
+    start_idx = 0
+    for idx, dt in enumerate(time_datetimes):
+        # choose first hour that is >= now
+        if dt >= now:
+            start_idx = idx
+            break
+
+    # for each day compute aggregates using the ensemble helper per-hour
+    cancel_out = {}
+    delay_out = {}
+    hours_per_day = 24
+    for day in range(days):
+        day_start = start_idx + day * hours_per_day
+        day_end = day_start + hours_per_day  # exclusive
+        expected_total_cm = 0.0
+        max_hourly_expected = 0.0
+        max_hourly_chance = 0.0
+        temps_for_mean = []
+
+        for hr_idx in range(day_start, day_end):
+            if hr_idx >= len(times):
+                break
+            # temperature
+            if hr_idx < len(temps):
+                temps_for_mean.append(temps[hr_idx])
+            # use ensemble function to get percent & amount for this hour
+            try:
+                snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(hr_idx, gfs_hourly)
+            except Exception:
+                snow_chance, snow_amount = (0.0, 0.0)
+
+
+            expected_total_cm += (snow_amount or 0.0)
+            if (snow_amount or 0.0) > max_hourly_expected:
+                max_hourly_expected = snow_amount or 0.0
+            if (snow_chance or 0.0) > max_hourly_chance:
+                max_hourly_chance = snow_chance or 0.0
+
+        mean_temp_c = None
+        if temps_for_mean:
+            mean_temp_c = sum(temps_for_mean) / len(temps_for_mean)
+
+        # cancel category)
+        if severe_alert_present:
+            cancel_cat = "almost guaranteed"
+        elif expected_total_cm >= 12.0:
+            cancel_cat = "almost guaranteed"
+        elif expected_total_cm >= 5.0:
+            cancel_cat = "likely"
+        elif expected_total_cm >= 1.0:
+            cancel_cat = "unlikely"
+        else:
+            cancel_cat = "very unlikely"
+
+        # delay category 
+        if severe_alert_present:
+            delay_cat = "almost guaranteed"
+        elif expected_total_cm >= 6.0:
+            delay_cat = "almost guaranteed"
+        elif expected_total_cm >= 3.0:
+            delay_cat = "likely"
+        elif expected_total_cm >= 0.5:
+            delay_cat = "unlikely"
+        else:
+            delay_cat = "very unlikely"
+
+        # bump/downgrade rules 
+        if max_hourly_chance >= 80.0 and max_hourly_expected >= 5.0:
+            cancel_cat = bumpCat(cancel_cat)
+            delay_cat = bumpCat(delay_cat)
+        elif max_hourly_chance >= 60.0 and max_hourly_expected >= 3.0:
+            cancel_cat = bumpCat(cancel_cat)
+
+        if advisory_alert_present and cancel_cat != "almost guaranteed":
+            delay_cat = bumpCat(delay_cat)
+
+        if mean_temp_c is not None and mean_temp_c > 2.0:
+            if not severe_alert_present:
+                cancel_cat = decCat(cancel_cat)
+                delay_cat = decCat(delay_cat)
+
+        if max_hourly_chance >= 90.0 and expected_total_cm < 0.5:
+            delay_cat = bumpCat(delay_cat)
+
+        cancel_out[f"day{day+1}"] = cancel_cat
+        delay_out[f"day{day+1}"] = delay_cat
+
+    return {"cancel": cancel_out, "delay": delay_out}
