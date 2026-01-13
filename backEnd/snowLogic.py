@@ -94,3 +94,13 @@ def get_nws_alerts(lat, lon):
             results += "Alert: " + event + " Valid Until " + ends_str
             
     return results
+def schoolPredictionForDay(lat, lon, day):
+    nws_alerts_str = get_nws_alerts(lat, lon)
+    #more severe weather alerts = almost guarenteed school cancellation
+    severe_warning_keywords = ["Blizzard Warning", "Winter Storm Warning", "Ice Storm Warning"]
+    #less severe weather alerts
+    advisory_keywords = ["Winter Weather Advisory", "Advisory"]
+
+    severe_alert = any(k in nws_alerts_str for k in severe_warning_keywords)
+    advisory_alert = any(k in nws_alerts_str for k in advisory_keywords)
+    order = ["very unlikely", "unlikely", "likely", "almost guaranteed"]
