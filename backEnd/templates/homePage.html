@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Find My Snow Forecast!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
-
 <body class="pageLayout">
     <video autoplay loop muted playsinline class="backgroundSnow">
         <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
@@ -15,26 +12,11 @@
         <h1 id="title">Snow Predictor!</h1>
         <a class="aboutLink" href="about">About</a>
     </div>
-
-    <div class="centerInput">
-        <h1 id="header">See How Much Snow Is Coming!</h1>
-
-
-    </div>
-
     <div class="inputContainer">
-
         <div class="inputWithBackground">
-
-
-            <label for="num1">City:</label>
-            <input type="text" id="num1" placeholder="">
-        </div>
-
-        <div class="inputWithBackground">
-            <label for="state">State:</label>
+            <input type="text" id="num1" placeholder="City">
             <select id="num2" name="state" aria-label="State">
-                <option value="" disabled selected>Select a state</option>
+                <option value="" disabled selected>State</option>
 
                 <!-- Maryland and Virginia at the top -->
                 <optgroup label="Preferred">
