@@ -21,7 +21,7 @@ fetch(`/get_forecast?city=${encodeURIComponent(city)}&state=${encodeURIComponent
         const timeMatch = line.match(/(\d{2}:\d{2})/);
         const snowChanceMatch = line.match(/Snow chance:\s*([\d.]+%)/);
         const snowAmountMatch = line.match(/Snow amount:\s*([\d.]+cm)/);
-        const tempMatch = line.match(/Temperature:\s*([\d.]+°C)/);
+        const tempMatch = line.match(/Temperature:\s*(-?[\d.]+°F)/);
 
         const time = timeMatch ? timeMatch[1] : "--";
         const snowChance = snowChanceMatch ? snowChanceMatch[1] : "--";
