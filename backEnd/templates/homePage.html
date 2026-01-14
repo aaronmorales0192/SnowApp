@@ -8,7 +8,7 @@
     <video autoplay loop muted playsinline class="backgroundSnow">
         <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
     </video>
-    <div class="blueOverlay"></div>
+    <div class="colorOverlay"></div>
     <div class="topLayout">
         <h1 id="title">Snow Predictor!</h1>
         <a class="aboutLink" href="about">About</a>
@@ -87,7 +87,7 @@
         <h2 class="description">Input in your city and state to find out the snow chances and school cancelation in the area!</h2>
     </div>
     <div class="imageContainer">
-        <img src="../../snow.jpg" alt="snowflake image">
+        <img src="{{ url_for('static', filename='snow.png') }}" alt="snowflake image">
     </div>
     <p id="answer"></p>
     <script src="{{ url_for('static', filename='websiteView.js') }}"></script>
