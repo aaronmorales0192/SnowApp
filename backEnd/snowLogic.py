@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 def get_forecast_summary(lat, lon):
     #"""Fetch forecast data and return a readable string summary."""
     
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation&forecast_days=5&timezone=America%2FNew_York"
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation&forecast_days=5&timezone=America%2FNew_York&temperature_unit=fahrenheit"
 
     GFS_url = f"https://ensemble-api.open-meteo.com/v1/ensemble?latitude={lat}&longitude={lon}&hourly=snowfall&models=gfs_seamless&forecast_days=5&timezone=America/New_York"
     with ThreadPoolExecutor(max_workers=2) as executor:
@@ -35,7 +35,7 @@ def get_forecast_summary(lat, lon):
         snow_chance, snow_amount = get_snowfall_chance_amount_ensemble(next_range_hour, GFS_MODEL_data["hourly"])
 
         #This .strftime() function allows us to change the format of the datetime object and write it to a string. 
-        summary = f"⏱️ Date: {forecast_time.strftime('%Y-%m-%d %H:%M')} | ❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°C"
+        summary = f"⏱️ Date: {forecast_time.strftime('%Y-%m-%d %H:%M')} | ❄️ Snow chance: {snow_chance:.1f}% | 🌨️ Snow amount: {snow_amount:.2f}cm | 🌡️ Temperature: {next_hour_temp:.1f}°F"
         summary_24hrs.append(summary)
     
     # Return as a joined formatted string
