@@ -6,6 +6,13 @@
   padding: 0;
   display: block;
 }
+.blueOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+  pointer-events: none;
+}
 
 .backgroundSnow {
   position: fixed;
@@ -29,8 +36,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-  /* border: 8px solid rgb(100, 45, 168); */
+}
 
+.description {
+  font-family: sans-serif, Arial, Helvetica;
+  margin: 0 0 200px 0;
+  color: white;
+  text-align:center;
 }
 
 .centerInput {
@@ -43,15 +55,15 @@
 }
 
 .inputContainer {
- display: flex;
+  display: flex;
   justify-content: flex-end;
-  padding: 0 30vw;  
-  margin-top: 250px;
+  padding: 0 40vw;  
+  margin-top: 350px;
   margin-left: 800px;
 }
 
 input, select {
-  width: 250px;
+  width: 200px;
   height: 42px;
   font-size: 18px;
   padding: 8px 12px;
@@ -81,36 +93,32 @@ input, select {
   text-align: center;
   width: 100%;
   margin-bottom: 10px;
-
-
 }
 
 .inputWithBackground {
   display: flex;
-  background-color: rgb(101, 167, 225);
-  padding: 20px 220px 30px 30px;
+  background-color: white;
+  padding: 20px 30px 20px 30px;
   gap: 30px;
-  border-radius: 8px;
-  margin: 0 0 0 200px;
-  min-width: 250px;
-
+  border-radius: 15px;
+  border: 8px solid rgb(101, 167, 225);
+  min-width: 700px;
+  align-items: center;
+  z-index: 0;
 }
 
 .snowButton {
-  margin-top: 90px;
   font-size: 30px;
   font-family: "Times New Roman", Times, serif;
   background-color: rgb(101, 167, 225);
   border-radius: 10px;
   /* padding: 20px 20px; */
-
-
   display: inline-block;
   /* Important for links */
   text-align: center;
   text-decoration: none;
   color: white;
-  padding: 15px 40px;
+  padding: 15px 30px;
 }
 
 .aboutLink {
@@ -119,6 +127,7 @@ input, select {
   font-size: 20px;
   padding: 6px 12px;
   border: 2px solid white;
+  margin: 0 40px 0 0;
   /* outline */
 }
 
@@ -127,7 +136,7 @@ input, select {
 }
 
 #title {
-  margin: 0;
+  margin: 0 0 0 40px;
   padding: 0;
   font-size: 30px;
   color: rgb(231, 235, 238);

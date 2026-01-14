@@ -8,6 +8,7 @@
     <video autoplay loop muted playsinline class="backgroundSnow">
         <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
     </video>
+    <div class="blueOverlay"></div>
     <div class="topLayout">
         <h1 id="title">Snow Predictor!</h1>
         <a class="aboutLink" href="about">About</a>
@@ -76,18 +77,15 @@
                     <option value="WY">Wyoming</option>
                 </optgroup>
             </select>
+
+            <a id="snowButton" class="snowButton" href="#">
+                Get Snow Forecast
+            </a>
         </div>
-
     </div>
-
-    <div class="centerInput">
-
-        <a id="snowButton" class="snowButton" href="#">
-            Get Snow Forecast
-        </a>
-
+    <div class="descriptionContainer">
+        <h2 class="description">This is a testing word</h2>
     </div>
-
     <p id="answer"></p>
     <script src="{{ url_for('static', filename='websiteView.js') }}"></script>
 
