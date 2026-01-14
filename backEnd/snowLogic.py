@@ -91,11 +91,12 @@ def get_nws_alerts(lat, lon):
                 ends_str = ends_dt.strftime("%Y-%m-%d %I:%M %p")
             else:
                 ends_str = "Unknown"
-            results += "Alert: " + event + " Valid Until " + ends_str
-            
+            results += "Alert: " + event + " Valid Until " + ends_str      
     return results
-def schoolPredictionForDay(lat, lon, days=5, user_agent="school-predict/1.0"):
+
+def schoolPredictionForDay(lat, lon, days=5):
     order = ["very unlikely", "unlikely", "likely", "almost guaranteed"]
+    #helper function increments the category by one
     def bumpCat(cat):
         if cat not in order:
             return cat
@@ -103,6 +104,7 @@ def schoolPredictionForDay(lat, lon, days=5, user_agent="school-predict/1.0"):
             index = order.index(cat)
             return order[index + 1]
         return cat
+    #helper function decrements the category by one
     def decCat(cat):
         if cat not in order:
             return cat
@@ -113,12 +115,13 @@ def schoolPredictionForDay(lat, lon, days=5, user_agent="school-predict/1.0"):
 
     # keywords 
     severe_warning_keywords = ["Blizzard Warning", "Winter Storm Warning", "Ice Storm Warning", "Blizzard", "Winter Storm"]
-    advisory_keywords = ["Winter Weather Advisory", "Advisory", "Winter Storm Watch", "Winter Weather"]
+    advisory_keywords = ["Winter Weather Advisory", "Advisory", "Winter Weather"]
 
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation&forecast_days={days}&timezone=America%2FNew_York"
     GFS_url = f"https://ensemble-api.open-meteo.com/v1/ensemble?latitude={lat}&longitude={lon}&hourly=snowfall&models=gfs_seamless&forecast_days={days}&timezone=America%2FNew_York"
 
     # fetch both in parallel using fetch()
+    #use threads to speed up api calls
     try:
         with ThreadPoolExecutor(max_workers=2) as executor:
             f1 = executor.submit(fetch, url)
