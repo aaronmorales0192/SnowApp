@@ -2,7 +2,9 @@
     background-color: rgb(33, 121, 198);
     margin: 0;
     padding: 0;
-    display: block;
+    display: flex;            
+    flex-direction: column;   
+    min-height: 100vh;       
 }
 
 .topLayout{
@@ -55,7 +57,7 @@
 
 .titleText{
     color: rgb(245, 244, 244);
-    font-size: 55px;
+    font-size: 28px;
     text-align: center;
     margin: 5px;
 }
@@ -63,7 +65,7 @@
 .genText{
     margin: 5px;
     color: rgb(193, 187, 187);
-    font-size: 25px;
+    font-size: 16px;
     text-align: center
 }
 
@@ -85,13 +87,33 @@
     border-radius: 18px;   
     background-color: rgb(53, 145, 225);
 }
-.aboutText, .dataLayout, .useLayout, .whoLayout{
+
+.aboutText, .dataLayout, .useLayout, .whoLayout {
     display: flex;
-    align-items: flex-start;   
-    justify-content: flex-start; 
-    padding: 25px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 0 1 22%;        
+    width: 22%;         
+    max-width: 360px;    
+    padding: 16px;       
     border: 2px solid rgb(141, 188, 228);
-    border-radius: 18px;   
+    border-radius: 18px;
     background-color: rgb(53, 145, 225);
-    flex: 1;
+    box-sizing: border-box; 
+}
+
+.aboutImage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;        /* small gap from the text boxes */
+    box-sizing: border-box;
+}
+
+.aboutImage img {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;     
+    border-radius: 8px;    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12); 
 }
