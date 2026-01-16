@@ -55,6 +55,19 @@ def get_snow():
      #dictionary with forecast and advisory for the front end
     return jsonify(forecast=forecast, advisory=advisories)
 
+@app.route("/get_school_prediction", methods=["GET"])
+def get_school_prediction():
+    city = request.args.get("city")
+    state = request.args.get("state")
+    
+    # Get coordinates
+    lat, lon = data.get_coordinates(city, state)
+    
+    # Call the school prediction function
+    prediction = snowLogic.schoolPredictionForDay(lat, lon, days=5)
+    
+    return jsonify(prediction)
+
 
 
 # -----------------------------
