@@ -15,9 +15,9 @@ app = Flask(__name__)
 # -----------------------------
 @app.route("/")
 def home():
-    # Render the HTML file called "homepage.html"
+    # Render the HTML file called "homePage.html"
     # This must be in templates/
-    return render_template("homepage.html")
+    return render_template("homePage.html")
 
 @app.route("/results")
 def results():
