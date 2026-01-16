@@ -1,62 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <title>Snow Results</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <meta name="viewport content="width=device-width, initial-scale=1.0">
+    <title>Snow Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport content=" width=device-width, initial-scale=1.0">
 </head>
 
 <body class="pageLayout">
-   <video autoplay loop muted playsinline class="backgroundSnow">
-       <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
-   </video>
+    <video autoplay loop muted playsinline class="backgroundSnow">
+        <source src="{{ url_for('static', filename='snowfall.mp4') }}" type="video/mp4">
+    </video>
 
-   <div class="topLayout">
-       <h1 id="title">Snow Predictor!</h1>
-       <a class="aboutLink" href="/">Back Home</a>
-   </div>
+    <div class="topLayout">
+        <h1 id="title">Snow Predictor!</h1>
+        <a class="aboutLink" href="/">Back Home</a>
+    </div>
 
-   <div class="container">
-       <div class="main-content">
-           <div class="section-header">
-               <h2>Your Snow Forecast Results</h2>
-               <p class="subtitle">Detailed snowfall predictions and advisories for your location</p>
-           </div>
+    <div class="container">
+        <div class="main-content">
+            <div class="section-header">
+                <h2>Your Snow Forecast Results</h2>
+            </div>
 
-           <!-- ULTRA-COMPACT ADVISORY BLOCK -->
-           <div class="advisoryBlock compact">
-               <div class="advisory-header">
-                   <h3 id="advisoryHeading">Advisory</h3>
-               </div>
-               <div class="advisory-content">
-                   <pre id="advisoryContent" class="advisory-text">
+            <!-- ULTRA-COMPACT ADVISORY BLOCK -->
+            <div class="advisoryBlock compact">
+                <div class="advisory-header">
+                    <h3 id="advisoryHeading">Advisory</h3>
+                </div>
+                <div class="advisory-content">
+                    <pre id="advisoryContent" class="advisory-text">
                        Loading advisories...
                    </pre>
-               </div>
-           </div>
+                </div>
+            </div>
 
-           <div class="forecast-section">
-               <div class="section-header">
-                   <h2>Snow Forecast</h2>
-                   <p class="scroll-hint"><i class="fas fa-arrows-left-right"></i> Scroll horizontally to view more hours</p>
-               </div>
-               
-               <div class="hourlyBox glass-card">
-                   <div class="hourlyScroll" id="forecast">
-                       <!-- Content will be populated by JavaScript -->
-                   </div>
-               </div>
-           </div>
+            <div class="forecast-section">
+                <div class="section-header">
+                    <h2>Snow Forecast</h2>
+                   
+                </div>
 
-           <!-- SPACE FOR FUTURE CONTENT -->
-           <div class="future-content-space">
-               <!-- Add more components here later -->
-           </div>
-       </div>
-   </div>
+                <div class="hourlyBox glass-card">
+                    <div class="hourlyScroll" id="forecast">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
 
-   <script src="{{ url_for('static', filename='resultsView.js') }}"></script>
+            <div class="school-prediction-section compact-section">
+                <div class="section-header compact-header">
+                    <h2>School Predictions</h2>
+                </div>
+
+                <div class="prediction-container compact-container glass-card">
+                    <div id="schoolPredictionContent" class="prediction-grid compact-grid">
+                        <div class="loading-prediction">Loading predictions...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="{{ url_for('static', filename='resultsView.js') }}"></script>
 </body>
+
 </html>
